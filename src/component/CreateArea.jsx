@@ -1,7 +1,12 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
+import AddIcon from '@mui/icons-material/Add';
+
 
 function CreateArea(props) {
+
+    const [isExpanded, setExpanded] = useState(false);
+
   const [note, setNote] = useState({
     title: "",
     content: "",
@@ -27,9 +32,14 @@ function CreateArea(props) {
     event.preventDefault();//agar layar tidak berkedip saat diklik
   }
 
+  function expand(){
+    setExpanded(true);
+  }
+
   return (
     <div>
-      <form>
+      <form className="create-note">
+        {isExpanded && (
         <input
           type="text"
           name="title"
@@ -37,14 +47,16 @@ function CreateArea(props) {
           placeholder="Title"
           onChange={handleChange}
         />
+        )}
         <textarea
+        onClick={expand}
           name="content"
-          rows="3"
+          rows={isExpanded ? 3 : 1}
           value={note.content}
           placeholder="Take a note..."
           onChange={handleChange}
         ></textarea>
-        <button onClick={addNote}>Add</button>
+        <button onClick={addNote}><AddIcon /></button>
       </form>
     </div>
   );
